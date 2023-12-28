@@ -9,3 +9,29 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Game {
+  id             Int             @id @default(autoincrement())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  commanders     Commander[]     @relation("GameToCommander")
+  gameDescriptor GameDescriptor?
+}
+
+model Commander {
+  id       Int     @id @default(autoincrement())
+  name     String
+  manaCost String?
+  colors   String
+  imageUrl String?
+  games    Game[]  @relation("GameToCommander")
+}
+
+enum GameDescriptor {
+  QuickMatch
+  Marathon
+  Upset
+  CloseCall
+  Dominance
+  Chaos
+}
