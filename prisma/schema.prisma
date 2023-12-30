@@ -14,17 +14,19 @@ model Game {
   id             Int             @id @default(autoincrement())
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  commanders     Commander[]     @relation("GameToCommander")
+  players        Json
+  commanders     Commander[]     @relation("GameCommander")
+  winner         String?
   gameDescriptor GameDescriptor?
 }
 
 model Commander {
   id       Int     @id @default(autoincrement())
   name     String
-  manaCost String?
+  manaCost Int?
   colors   String
   imageUrl String?
-  games    Game[]  @relation("GameToCommander")
+  games    Game[]  @relation("GameCommander")
 }
 
 enum GameDescriptor {
